@@ -10,7 +10,7 @@ O portal busca facilitar a transição entre a teoria estatística e sua aplica�
 
 Coordenação: **Prof. Dr. Hitalo Joseferson Batista Nascimento**
 
-Para mais detalhes sobre justificativa, metodologia, organização das equipes e próximos passos, veja a página [Sobre o Projeto](https://lulu042014.github.io/Portal_de_Estatistica/sobre.html) no site.
+Para mais detalhes sobre justificativa, metodologia, organização das equipes e próximos passos, veja a página [Sobre o Projeto](https://hitalolee.github.io/PECID/sobre.html) no site.
 
 ## Conteúdo
 
