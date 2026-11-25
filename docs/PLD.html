@@ -322,7 +322,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="exemplo-prático-um-mini-pipeline-de-pré-processamento" class="level2">
 <h2 class="anchored" data-anchor-id="exemplo-prático-um-mini-pipeline-de-pré-processamento">Exemplo prático: um mini pipeline de pré-processamento</h2>
 <p>Vamos aplicar, em sequência, as principais técnicas apresentadas acima sobre um conjunto de dados simulado propositalmente “sujo” — com valores ausentes, duplicatas e um outlier.</p>
-<div id="95ca332e" class="cell" data-execution_count="1">
+<div id="7beeb2fd" class="cell" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -404,7 +404,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-<div id="00009687" class="cell" data-execution_count="2">
+<div id="ca5f08ad" class="cell" data-execution_count="2">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. Remover duplicatas</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>dados_limpos <span class="op">=</span> dados.drop_duplicates()</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Linhas antes: </span><span class="sc">{</span><span class="bu">len</span>(dados)<span class="sc">}</span><span class="ss"> | Linhas depois de remover duplicatas: </span><span class="sc">{</span><span class="bu">len</span>(dados_limpos)<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -412,19 +412,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <pre><code>Linhas antes: 7 | Linhas depois de remover duplicatas: 6</code></pre>
 </div>
 </div>
-<div id="56253d62" class="cell" data-execution_count="3">
+<div id="9615bb7a" class="cell" data-execution_count="3">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. Tratar valores ausentes (imputação pela mediana)</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>dados_limpos[<span class="st">"idade"</span>] <span class="op">=</span> dados_limpos[<span class="st">"idade"</span>].fillna(dados_limpos[<span class="st">"idade"</span>].median())</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>dados_limpos[<span class="st">"salario"</span>] <span class="op">=</span> dados_limpos[<span class="st">"salario"</span>].fillna(dados_limpos[<span class="st">"salario"</span>].median())</span>
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>dados_limpos</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>/tmp/ipykernel_626541/2832584371.py:2: SettingWithCopyWarning: 
+<pre><code>/tmp/ipykernel_629223/2832584371.py:2: SettingWithCopyWarning: 
 A value is trying to be set on a copy of a slice from a DataFrame.
 Try using .loc[row_indexer,col_indexer] = value instead
 
 See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
   dados_limpos["idade"] = dados_limpos["idade"].fillna(dados_limpos["idade"].median())
-/tmp/ipykernel_626541/2832584371.py:3: SettingWithCopyWarning: 
+/tmp/ipykernel_629223/2832584371.py:3: SettingWithCopyWarning: 
 A value is trying to be set on a copy of a slice from a DataFrame.
 Try using .loc[row_indexer,col_indexer] = value instead
 
@@ -494,7 +494,7 @@ See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stab
 </div>
 </div>
 </div>
-<div id="6bf75b35" class="cell" data-execution_count="4">
+<div id="b0a45a9f" class="cell" data-execution_count="4">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 3. Detectar outliers pelo método do IQR (na coluna idade)</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>Q1 <span class="op">=</span> dados_limpos[<span class="st">"idade"</span>].quantile(<span class="fl">0.25</span>)</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>Q3 <span class="op">=</span> dados_limpos[<span class="st">"idade"</span>].quantile(<span class="fl">0.75</span>)</span>
@@ -512,7 +512,7 @@ Outliers encontrados:
 6           6  150.0</code></pre>
 </div>
 </div>
-<div id="bf6f4af7" class="cell" data-execution_count="5">
+<div id="5a0c9c35" class="cell" data-execution_count="5">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 4. Normalização (Min-Max) e padronização (Z-score) do salário</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> MinMaxScaler, StandardScaler</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -520,13 +520,13 @@ Outliers encontrados:
 <span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>dados_limpos[<span class="st">"salario_zscore"</span>] <span class="op">=</span> StandardScaler().fit_transform(dados_limpos[[<span class="st">"salario"</span>]])</span>
 <span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>dados_limpos[[<span class="st">"cliente_id"</span>, <span class="st">"salario"</span>, <span class="st">"salario_minmax"</span>, <span class="st">"salario_zscore"</span>]]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>/tmp/ipykernel_626541/296554676.py:4: SettingWithCopyWarning: 
+<pre><code>/tmp/ipykernel_629223/296554676.py:4: SettingWithCopyWarning: 
 A value is trying to be set on a copy of a slice from a DataFrame.
 Try using .loc[row_indexer,col_indexer] = value instead
 
 See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
   dados_limpos["salario_minmax"] = MinMaxScaler().fit_transform(dados_limpos[["salario"]])
-/tmp/ipykernel_626541/296554676.py:5: SettingWithCopyWarning: 
+/tmp/ipykernel_629223/296554676.py:5: SettingWithCopyWarning: 
 A value is trying to be set on a copy of a slice from a DataFrame.
 Try using .loc[row_indexer,col_indexer] = value instead
 
@@ -596,7 +596,7 @@ See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stab
 </div>
 </div>
 </div>
-<div id="6a8eab25" class="cell" data-execution_count="6">
+<div id="d294fedf" class="cell" data-execution_count="6">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 5. Codificação one-hot da variável categórica "cidade"</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>dados_codificados <span class="op">=</span> pd.get_dummies(dados_limpos, columns<span class="op">=</span>[<span class="st">"cidade"</span>], prefix<span class="op">=</span><span class="st">"cidade"</span>)</span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>dados_codificados</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
