@@ -2,7 +2,7 @@
 
 Portal web interativo com conteúdo introdutório e tutoriais de Estatística e Ciência de Dados, desenvolvido como projeto de extensão da **Universidade Federal do Ceará (UFC) — Campus de Itapajé**.
 
-🔗 **Site publicado:** 🔗 Site publicado: https://hitalolee.github.io/PECID/
+🔗 **Site publicado:** https://hitalolee.github.io/PECID/
 
 ## Sobre o projeto
 
