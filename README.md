@@ -2,7 +2,7 @@
 
 Portal web interativo com conteúdo introdutório e tutoriais de Estatística e Ciência de Dados, desenvolvido como projeto de extensão da **Universidade Federal do Ceará (UFC) — Campus de Itapajé**.
 
-🔗 **Site publicado:** https://lulu042014.github.io/Portal_de_Estatistica/
+🔗 **Site publicado:** 🔗 Site publicado: https://hitalolee.github.io/PECID/
 
 ## Sobre o projeto
 
@@ -43,8 +43,8 @@ Para mais detalhes sobre justificativa, metodologia, organização das equipes e
 > ⚠️ Se os blocos de código Python derem erro de `ModuleNotFoundError` ao renderizar (mesmo com os pacotes instalados), confira se o kernel Jupyter usado pelo `reticulate` aponta para o Python certo: `jupyter kernelspec list`, e edite o `kernel.json` correspondente para usar o caminho completo do interpretador Python do seu ambiente.
 
 ```bash
-git clone https://github.com/Lulu042014/Portal_de_Estatistica.git
-cd Portal_de_Estatistica
+git clone https://github.com/hitalolee/PECID.git
+cd PECID
 quarto render      # gera o site em _site/
 quarto preview      # visualiza localmente com hot reload
 ```
@@ -52,7 +52,7 @@ quarto preview      # visualiza localmente com hot reload
 ## Publicando atualizações
 
 ```bash
-quarto publish gh-pages
+quarto render
 ```
 
 ## Estrutura do repositório
