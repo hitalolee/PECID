@@ -1,0 +1,49 @@
+/* Blocos de código */
+div.sourceCode {
+  background-color: #B0E2FF;
+  border: 1px solid #b8c2cc;
+  border-radius: 8px;
+  overflow-x: auto;
+}
+
+div.sourceCode pre.sourceCode {
+  background-color: transparent;
+  color: inherit;
+  border: none;
+  border-radius: 0;
+  padding: 1.1rem;
+  margin: 0;
+  box-shadow: none;
+  font-family: "Fira Code", "Courier New", monospace;
+  font-size: 1em;
+  line-height: 1.7;
+}
+
+/* Saídas dos blocos executados */
+pre:not(.sourceCode) {
+  background-color: #B0E2FF;
+  color: #1f2933;
+  border: 1px solid #b8c2cc;
+  border-radius: 8px;
+  padding: 1.1rem;
+  overflow-x: auto;
+  font-family: "Fira Code", "Courier New", monospace;
+  font-size: 1em;
+  line-height: 1.7;
+}
+
+/* Código inline */
+p code,
+li code,
+td code,
+h1 code,
+h2 code,
+h3 code,
+h4 code {
+  background-color: #f2f4f7;
+  color: #9a5b00;
+  padding: 0.15em 0.4em;
+  border: 1px solid #b8c2cc;
+  border-radius: 4px;
+  font-size: 0.95em;
+}

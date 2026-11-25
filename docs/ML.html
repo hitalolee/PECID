@@ -1,0 +1,919 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.18">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Machine Learning: Fundamentos – Portal de Estatistica e Ciencia de Dados</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-bb62276ab45c84d9efd712f51ff97b5a.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-9b015cf739b0efd59a95daca0cdd3253.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="globalStyle.css">
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">Portal de Estatistica e Ciencia de Dados</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="./index.html"> 
+<span class="menu-text">Inicio</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./sobre.html"> 
+<span class="menu-text">Sobre o Projeto</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-fundamentos" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Fundamentos</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-fundamentos">    
+        <li>
+    <a class="dropdown-item" href="./FCD.html">
+ <span class="dropdown-text">Fundamentos de Ciência de Dados</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./FP.html">
+ <span class="dropdown-text">Fundamentos de Programação</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./FL.html">
+ <span class="dropdown-text">Ferramentas e Linguagens</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./r.html">
+ <span class="dropdown-text">Introdução a R</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-estatística" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Estatística</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-estatística">    
+        <li>
+    <a class="dropdown-item" href="./IEP.html">
+ <span class="dropdown-text">Introdução a Estatística e Probabilidade</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./descritiva.html">
+ <span class="dropdown-text">Estatística Descritiva</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./PD.html">
+ <span class="dropdown-text">Probabilidade</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./IF.html">
+ <span class="dropdown-text">Inferência Estatística</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-dados-e-modelagem" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Dados e Modelagem</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-dados-e-modelagem">    
+        <li>
+    <a class="dropdown-item" href="./PLD.html">
+ <span class="dropdown-text">Pré-processamento e Limpeza de Dados</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./visualizacao.html">
+ <span class="dropdown-text">Visualização de Dados</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./SQL.html">
+ <span class="dropdown-text">SQL e Bancos de Dados</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./ML.html">
+ <span class="dropdown-text">Machine Learning</span></a>
+  </li>  
+    </ul>
+  </li>
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#introdução" id="toc-introdução" class="nav-link active" data-scroll-target="#introdução">Introdução</a></li>
+  <li><a href="#tipos-de-aprendizado" id="toc-tipos-de-aprendizado" class="nav-link" data-scroll-target="#tipos-de-aprendizado">Tipos de Aprendizado</a></li>
+  <li><a href="#divisão-em-treino-e-teste" id="toc-divisão-em-treino-e-teste" class="nav-link" data-scroll-target="#divisão-em-treino-e-teste">Divisão em Treino e Teste</a></li>
+  <li><a href="#overfitting-e-underfitting" id="toc-overfitting-e-underfitting" class="nav-link" data-scroll-target="#overfitting-e-underfitting">Overfitting e Underfitting</a></li>
+  <li><a href="#validação-cruzada-k-fold" id="toc-validação-cruzada-k-fold" class="nav-link" data-scroll-target="#validação-cruzada-k-fold">Validação Cruzada (k-fold)</a></li>
+  <li><a href="#métricas-de-avaliação" id="toc-métricas-de-avaliação" class="nav-link" data-scroll-target="#métricas-de-avaliação">Métricas de Avaliação</a></li>
+  <li><a href="#exemplo-prático-1-regressão" id="toc-exemplo-prático-1-regressão" class="nav-link" data-scroll-target="#exemplo-prático-1-regressão">Exemplo Prático 1: Regressão</a>
+  <ul class="collapse">
+  <li><a href="#interpretação" id="toc-interpretação" class="nav-link" data-scroll-target="#interpretação">Interpretação</a></li>
+  </ul></li>
+  <li><a href="#exemplo-prático-2-classificação" id="toc-exemplo-prático-2-classificação" class="nav-link" data-scroll-target="#exemplo-prático-2-classificação">Exemplo Prático 2: Classificação</a>
+  <ul class="collapse">
+  <li><a href="#interpretação-1" id="toc-interpretação-1" class="nav-link" data-scroll-target="#interpretação-1">Interpretação</a></li>
+  </ul></li>
+  <li><a href="#exemplo-prático-3-visualizando-o-overfitting" id="toc-exemplo-prático-3-visualizando-o-overfitting" class="nav-link" data-scroll-target="#exemplo-prático-3-visualizando-o-overfitting">Exemplo Prático 3: Visualizando o Overfitting</a>
+  <ul class="collapse">
+  <li><a href="#interpretação-2" id="toc-interpretação-2" class="nav-link" data-scroll-target="#interpretação-2">Interpretação</a></li>
+  </ul></li>
+  <li><a href="#aplicação-real-em-ciência-de-dados" id="toc-aplicação-real-em-ciência-de-dados" class="nav-link" data-scroll-target="#aplicação-real-em-ciência-de-dados">Aplicação real em Ciência de Dados</a></li>
+  <li><a href="#referências" id="toc-referências" class="nav-link" data-scroll-target="#referências">Referências</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Machine Learning: Fundamentos</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="introdução" class="level2">
+<h2 class="anchored" data-anchor-id="introdução">Introdução</h2>
+<p>Machine Learning (aprendizado de máquina) é o ramo da Ciência de Dados dedicado a construir sistemas que <strong>aprendem padrões a partir de dados</strong>, em vez de seguir regras explicitamente programadas. Ao invés de escrever “se a idade for maior que X e a renda maior que Y, então classifique como cliente premium”, um modelo de ML aprende essa regra (e outras muito mais complexas) sozinho, a partir de exemplos.</p>
+<p>Essa é a diferença fundamental em relação à programação tradicional: no lugar de <code>Regras + Dados → Resultado</code>, o Machine Learning inverte a lógica para <code>Dados + Resultado → Regras</code>.</p>
+</section>
+<section id="tipos-de-aprendizado" class="level2">
+<h2 class="anchored" data-anchor-id="tipos-de-aprendizado">Tipos de Aprendizado</h2>
+<ul>
+<li><strong>Aprendizado Supervisionado:</strong> o modelo aprende a partir de exemplos rotulados (temos o “gabarito”). Divide-se em:
+<ul>
+<li><strong>Regressão</strong> — prevê um valor numérico contínuo (ex: preço de um imóvel)</li>
+<li><strong>Classificação</strong> — prevê uma categoria (ex: e-mail é spam ou não)</li>
+</ul></li>
+<li><strong>Aprendizado Não Supervisionado:</strong> o modelo encontra padrões em dados sem rótulos (ex: agrupar clientes em segmentos via clustering)</li>
+<li><strong>Aprendizado por Reforço:</strong> um agente aprende por tentativa e erro, recebendo recompensas ou penalidades (ex: um agente jogando xadrez)</li>
+</ul>
+<p>Este guia foca no aprendizado supervisionado, que é o ponto de partida mais comum.</p>
+</section>
+<section id="divisão-em-treino-e-teste" class="level2">
+<h2 class="anchored" data-anchor-id="divisão-em-treino-e-teste">Divisão em Treino e Teste</h2>
+<p>Um erro comum de iniciantes é avaliar um modelo usando os <strong>mesmos dados</strong> com que ele foi treinado — isso quase sempre superestima a qualidade do modelo, porque ele já “viu” as respostas.</p>
+<p>A prática padrão é dividir os dados em dois conjuntos:</p>
+<ul>
+<li><strong>Conjunto de treino</strong> (geralmente 70-80% dos dados) — usado para o modelo aprender os padrões</li>
+<li><strong>Conjunto de teste</strong> (os 20-30% restantes) — usado <em>apenas</em> para avaliar o modelo em dados que ele nunca viu, simulando o uso real</li>
+</ul>
+<p>Essa divisão é o que permite saber se um modelo vai <strong>generalizar</strong> bem para novos dados, ou se apenas “decorou” o conjunto de treino.</p>
+</section>
+<section id="overfitting-e-underfitting" class="level2">
+<h2 class="anchored" data-anchor-id="overfitting-e-underfitting">Overfitting e Underfitting</h2>
+<ul>
+<li><strong>Underfitting (subajuste):</strong> o modelo é simples demais para capturar os padrões dos dados — erra tanto no treino quanto no teste.</li>
+<li><strong>Overfitting (sobreajuste):</strong> o modelo é complexo demais e “decora” até o ruído dos dados de treino — acerta quase tudo no treino, mas erra muito no teste, porque aprendeu particularidades que não se repetem em dados novos.</li>
+<li><strong>Ajuste ideal (bom generalização):</strong> o modelo captura o padrão real dos dados sem se apegar ao ruído — desempenho parecido (e bom) tanto no treino quanto no teste.</li>
+</ul>
+<p>Esse equilíbrio é conhecido como o <strong>trade-off viés-variância</strong> (<em>bias-variance tradeoff</em>): modelos simples têm alto viés (underfitting), modelos complexos têm alta variância (overfitting).</p>
+</section>
+<section id="validação-cruzada-k-fold" class="level2">
+<h2 class="anchored" data-anchor-id="validação-cruzada-k-fold">Validação Cruzada (k-fold)</h2>
+<p>Dividir os dados uma única vez em treino/teste pode dar uma avaliação enganosa, dependendo de qual “sorte” caiu em cada conjunto. A <strong>validação cruzada k-fold</strong> resolve isso dividindo os dados em <span class="math inline">\(k\)</span> partes (<em>folds</em>), treinando o modelo <span class="math inline">\(k\)</span> vezes — cada vez usando uma parte diferente como teste e as demais como treino — e depois calculando a média do desempenho. Isso dá uma estimativa muito mais confiável da capacidade de generalização do modelo.</p>
+</section>
+<section id="métricas-de-avaliação" class="level2">
+<h2 class="anchored" data-anchor-id="métricas-de-avaliação">Métricas de Avaliação</h2>
+<p><strong>Para regressão</strong> (variável numérica):</p>
+<ul>
+<li><strong>MSE (Erro Quadrático Médio):</strong> média dos erros ao quadrado — penaliza mais os erros grandes</li>
+<li><strong>RMSE (Raiz do MSE):</strong> mesma unidade da variável original, mais fácil de interpretar</li>
+<li><strong>R² (coeficiente de determinação):</strong> proporção da variância explicada pelo modelo (0 a 1, quanto maior melhor)</li>
+</ul>
+<p><strong>Para classificação</strong> (variável categórica):</p>
+<ul>
+<li><strong>Acurácia:</strong> proporção de previsões corretas sobre o total</li>
+<li><strong>Precisão:</strong> dos casos que o modelo previu como positivos, quantos realmente eram positivos</li>
+<li><strong>Recall (sensibilidade):</strong> dos casos realmente positivos, quantos o modelo conseguiu identificar</li>
+<li><strong>F1-score:</strong> média harmônica entre precisão e recall, útil quando as classes são desbalanceadas</li>
+<li><strong>Matriz de confusão:</strong> tabela que cruza previsões com valores reais, mostrando acertos e os dois tipos de erro (falsos positivos e falsos negativos)</li>
+</ul>
+</section>
+<section id="exemplo-prático-1-regressão" class="level2">
+<h2 class="anchored" data-anchor-id="exemplo-prático-1-regressão">Exemplo Prático 1: Regressão</h2>
+<p>Vamos prever um valor numérico (salário) a partir de uma variável (anos de experiência), avaliando o modelo em dados de teste que ele nunca viu.</p>
+<div id="d6307088" class="cell" data-execution_count="1">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> train_test_split</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> LinearRegression</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> mean_squared_error, r2_score</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>np.random.seed(<span class="dv">42</span>)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>n <span class="op">=</span> <span class="dv">100</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>experiencia <span class="op">=</span> np.random.uniform(<span class="dv">0</span>, <span class="dv">20</span>, n)</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>salario <span class="op">=</span> <span class="dv">3000</span> <span class="op">+</span> <span class="dv">450</span> <span class="op">*</span> experiencia <span class="op">+</span> np.random.normal(<span class="dv">0</span>, <span class="dv">800</span>, n)  <span class="co"># relação linear + ruído</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> experiencia.reshape(<span class="op">-</span><span class="dv">1</span>, <span class="dv">1</span>)</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> salario</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>X_treino, X_teste, y_treino, y_teste <span class="op">=</span> train_test_split(X, y, test_size<span class="op">=</span><span class="fl">0.3</span>, random_state<span class="op">=</span><span class="dv">42</span>)</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>modelo <span class="op">=</span> LinearRegression()</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>modelo.fit(X_treino, y_treino)</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>y_pred <span class="op">=</span> modelo.predict(X_teste)</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>rmse <span class="op">=</span> np.sqrt(mean_squared_error(y_teste, y_pred))</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>r2 <span class="op">=</span> r2_score(y_teste, y_pred)</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Coeficiente (por ano de experiência): </span><span class="sc">{</span>modelo<span class="sc">.</span>coef_[<span class="dv">0</span>]<span class="sc">:.2f}</span><span class="ss">"</span>)</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Intercepto: </span><span class="sc">{</span>modelo<span class="sc">.</span>intercept_<span class="sc">:.2f}</span><span class="ss">"</span>)</span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"RMSE no conjunto de teste: </span><span class="sc">{</span>rmse<span class="sc">:.2f}</span><span class="ss">"</span>)</span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"R² no conjunto de teste: </span><span class="sc">{</span>r2<span class="sc">:.4f}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Coeficiente (por ano de experiência): 431.34
+Intercepto: 3094.32
+RMSE no conjunto de teste: 635.46
+R² no conjunto de teste: 0.9536</code></pre>
+</div>
+</div>
+<section id="interpretação" class="level3">
+<h3 class="anchored" data-anchor-id="interpretação">Interpretação</h3>
+<p>O R² próximo de 1 indica que o modelo explica bem a variação do salário a partir da experiência nos dados de <strong>teste</strong> — não nos dados de treino, o que é a avaliação que realmente importa. O RMSE está na mesma unidade do salário (R$), facilitando dizer: “em média, o modelo erra a previsão em cerca de R$ {valor}”.</p>
+</section>
+</section>
+<section id="exemplo-prático-2-classificação" class="level2">
+<h2 class="anchored" data-anchor-id="exemplo-prático-2-classificação">Exemplo Prático 2: Classificação</h2>
+<p>Agora vamos prever uma categoria: se um cliente vai comprar ou não, a partir de idade e renda.</p>
+<div id="764b8888" class="cell" data-execution_count="2">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.datasets <span class="im">import</span> make_classification</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> LogisticRegression</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> confusion_matrix, accuracy_score, precision_score, recall_score, f1_score</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>X, y <span class="op">=</span> make_classification(n_samples<span class="op">=</span><span class="dv">300</span>, n_features<span class="op">=</span><span class="dv">2</span>, n_informative<span class="op">=</span><span class="dv">2</span>, n_redundant<span class="op">=</span><span class="dv">0</span>,</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>                             n_clusters_per_class<span class="op">=</span><span class="dv">1</span>, random_state<span class="op">=</span><span class="dv">42</span>)</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>X_treino, X_teste, y_treino, y_teste <span class="op">=</span> train_test_split(X, y, test_size<span class="op">=</span><span class="fl">0.3</span>, random_state<span class="op">=</span><span class="dv">42</span>)</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>modelo_clf <span class="op">=</span> LogisticRegression()</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>modelo_clf.fit(X_treino, y_treino)</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>y_pred_clf <span class="op">=</span> modelo_clf.predict(X_teste)</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Matriz de confusão:"</span>)</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(confusion_matrix(y_teste, y_pred_clf))</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>()</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Acurácia: </span><span class="sc">{</span>accuracy_score(y_teste, y_pred_clf)<span class="sc">:.3f}</span><span class="ss">"</span>)</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Precisão: </span><span class="sc">{</span>precision_score(y_teste, y_pred_clf)<span class="sc">:.3f}</span><span class="ss">"</span>)</span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Recall: </span><span class="sc">{</span>recall_score(y_teste, y_pred_clf)<span class="sc">:.3f}</span><span class="ss">"</span>)</span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"F1-score: </span><span class="sc">{</span>f1_score(y_teste, y_pred_clf)<span class="sc">:.3f}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Matriz de confusão:
+[[44  2]
+ [ 2 42]]
+
+Acurácia: 0.956
+Precisão: 0.955
+Recall: 0.955
+F1-score: 0.955</code></pre>
+</div>
+</div>
+<section id="interpretação-1" class="level3">
+<h3 class="anchored" data-anchor-id="interpretação-1">Interpretação</h3>
+<p>A matriz de confusão mostra quatro números: verdadeiros negativos e falsos positivos na primeira linha, falsos negativos e verdadeiros positivos na segunda. Se o <strong>recall</strong> for baixo, o modelo está deixando passar muitos casos positivos reais (por exemplo, clientes que comprariam, mas o modelo não identificou); se a <strong>precisão</strong> for baixa, o modelo está “alarmando” demais, classificando casos negativos como positivos.</p>
+</section>
+</section>
+<section id="exemplo-prático-3-visualizando-o-overfitting" class="level2">
+<h2 class="anchored" data-anchor-id="exemplo-prático-3-visualizando-o-overfitting">Exemplo Prático 3: Visualizando o Overfitting</h2>
+<p>Vamos treinar árvores de decisão com profundidades crescentes e comparar o desempenho no treino versus no teste — o padrão clássico de overfitting deve aparecer conforme a árvore fica mais complexa.</p>
+<div id="6890b5ec" class="cell" data-execution_count="3">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.tree <span class="im">import</span> DecisionTreeClassifier</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>profundidades <span class="op">=</span> <span class="bu">range</span>(<span class="dv">1</span>, <span class="dv">15</span>)</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>acuracia_treino <span class="op">=</span> []</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>acuracia_teste <span class="op">=</span> []</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> profundidade <span class="kw">in</span> profundidades:</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>    arvore <span class="op">=</span> DecisionTreeClassifier(max_depth<span class="op">=</span>profundidade, random_state<span class="op">=</span><span class="dv">42</span>)</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>    arvore.fit(X_treino, y_treino)</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>    acuracia_treino.append(arvore.score(X_treino, y_treino))</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>    acuracia_teste.append(arvore.score(X_teste, y_teste))</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">6</span>, <span class="dv">4</span>))</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>ax.plot(profundidades, acuracia_treino, marker<span class="op">=</span><span class="st">"o"</span>, label<span class="op">=</span><span class="st">"Treino"</span>)</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>ax.plot(profundidades, acuracia_teste, marker<span class="op">=</span><span class="st">"o"</span>, label<span class="op">=</span><span class="st">"Teste"</span>)</span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="st">"Profundidade da árvore (complexidade do modelo)"</span>)</span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="st">"Acurácia"</span>)</span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">"Overfitting: acurácia de treino vs. teste"</span>)</span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>ax.legend()</span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="ML_files/figure-html/cell-4-output-1.png" width="565" height="373" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<section id="interpretação-2" class="level3">
+<h3 class="anchored" data-anchor-id="interpretação-2">Interpretação</h3>
+<p>Conforme a árvore fica mais profunda (mais complexa), a acurácia no <strong>treino</strong> sobe continuamente, se aproximando de 100% — o modelo está “decorando” os dados de treino. Mas a acurácia no <strong>teste</strong> para de melhorar e pode até piorar a partir de um certo ponto: esse é o sinal visual clássico de overfitting. O ponto ideal de complexidade é onde a curva de teste atinge seu pico, antes de começar a divergir da curva de treino.</p>
+</section>
+</section>
+<section id="aplicação-real-em-ciência-de-dados" class="level2">
+<h2 class="anchored" data-anchor-id="aplicação-real-em-ciência-de-dados">Aplicação real em Ciência de Dados</h2>
+<p>Todo o pipeline construído nas páginas anteriores do portal — estatística descritiva para entender os dados, pré-processamento para limpá-los, visualização para explorá-los — culmina exatamente aqui: um modelo de Machine Learning bem avaliado (com divisão treino/teste correta, métricas apropriadas e atenção ao overfitting) é o que transforma dados históricos em previsões confiáveis para decisões futuras, seja prever demanda, detectar fraude, ou recomendar produtos.</p>
+</section>
+<section id="referências" class="level2">
+<h2 class="anchored" data-anchor-id="referências">Referências</h2>
+<ul>
+<li>Géron, A. <em>Hands-On Machine Learning with Scikit-Learn, Keras, and TensorFlow</em>. O’Reilly, 2022.</li>
+<li>James, G. et al.&nbsp;<em>An Introduction to Statistical Learning</em>. Springer, 2021.</li>
+<li>Hastie, T.; Tibshirani, R.; Friedman, J. <em>The Elements of Statistical Learning</em>. Springer.</li>
+</ul>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/hitalolee\.github\.io\/PECID\/");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">
+<ol start="3" type="a">
+<li>2025 Equipe do Portal</li>
+</ol>
+</div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>
